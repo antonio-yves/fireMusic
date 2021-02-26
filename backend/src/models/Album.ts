@@ -1,6 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, OneToOne } from 'typeorm';
 import AlbumCover from './AlbumCover';
 import Artist from './Artist';
+import Music from './Music';
 
 @Entity('albuns')
 export default class Album {
@@ -38,4 +39,7 @@ export default class Album {
     @OneToOne(type => Artist, artist => artist.user)
     @JoinColumn({name: 'artist'})
     artist: Artist;
+
+    @OneToOne(type => Music, music => music.album) 
+    music: Music;
 }
