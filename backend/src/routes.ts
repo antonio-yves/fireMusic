@@ -27,6 +27,7 @@ routes.post('/users', UserController.create);
 routes.post('/login', LoginController.login);
 routes.post('/artist', loginMiddleware, ArtistController.create);
 routes.post('/album', loginMiddleware, albumCoverUpload.single('albumCover'), AlbumController.create);
+routes.get('/album/:id', AlbumController.show);
 routes.post('/music', loginMiddleware, musicUpload.single('music'), MusicController.create);
 
 export default routes;

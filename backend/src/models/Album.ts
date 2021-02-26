@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, OneToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, OneToOne, OneToMany } from 'typeorm';
 import AlbumCover from './AlbumCover';
 import Artist from './Artist';
 import Music from './Music';
@@ -40,6 +40,9 @@ export default class Album {
     @JoinColumn({name: 'artist'})
     artist: Artist;
 
-    @OneToOne(type => Music, music => music.album) 
-    music: Music;
+    @OneToMany(() => Music, music => music.album, {
+        cascade: ['insert', 'update']
+    })
+    @JoinColumn({name: 'albumId'})
+    musics: Music[];
 }

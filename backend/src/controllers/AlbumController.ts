@@ -81,5 +81,16 @@ export default {
 
         return response.status(200).json({"album": albumView.render(album), "cover": albumCoverView.render(cover)});
     },
+    async show (request: Request, response: Response){
+        const { id } = request.params;
+
+        const albumRepository = getRepository(Album);
+
+        const album = await albumRepository.findOneOrFail(id, {
+            relations: ['musics']
+        });
+        
+        return response.status(200).json(album);
+    }
 
 }

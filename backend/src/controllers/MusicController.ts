@@ -18,7 +18,7 @@ export default {
             trackNumber
         } = request.body;
 
-        const album = albumRepository.findOne(idAlbum);
+        const album = await albumRepository.findOne(idAlbum);
 
         const path = request.file.path;
 
@@ -48,5 +48,7 @@ export default {
 
         const music = musicRepository.create(musicData);
         await musicRepository.save(music);
+
+        return response.status(200).json({'ok': 'ok'});
     },
 }
