@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
 import Artist from '../models/Artist';
 import User from '../models/User';
-import userView from '../views/users_view';
+import artistView from '../views/artists_view';
 
 export default {
     async create(request: Request, response: Response){
@@ -14,6 +14,12 @@ export default {
             return response.status(400).json({"error": "Your profile is not allowed to this"});
         }
 
+        const hasArtist = await artistRepository.findOne({user});
+
+        if (hasArtist) {
+            return response.status(400).json({"error": "Your account already has an artist profile"})
+        }
+
         const artistData = {
             generos: request.body.generos,
             user
@@ -22,6 +28,6 @@ export default {
         const artist = artistRepository.create(artistData);
         await artistRepository.save(artist).catch();
         
-        return response.status(200).json({"user": userView.render(user), "artist": artist});
+        return response.status(200).json(artistView.render(artist));
     }
 }

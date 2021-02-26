@@ -1,10 +1,10 @@
 import {MigrationInterface, QueryRunner, Table} from "typeorm";
 
-export class createAlbum1613780763757 implements MigrationInterface {
+export class createMusic1614296015410 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         queryRunner.createTable(new Table({
-            name: 'albuns',
+            name: 'musics',
             columns: [
                 {
                     name: 'id',
@@ -15,57 +15,46 @@ export class createAlbum1613780763757 implements MigrationInterface {
                     default: 'uuid_generate_v4()'
                 },
                 {
-                    name: 'nome',
+                    name: 'musicName',
+                    type: 'varchar'
+                },
+                {
+                    name: 'composer',
                     type: 'varchar',
                 },
                 {
-                    name: 'copyright',
-                    type: 'string',
+                    name: 'musicDuration',
+                    type: 'integer',
                 },
                 {
-                    name: 'generos',
-                    type: 'string',
-                },
-                {
-                    name: 'isComplete',
-                    type: 'boolean',
-                },
-                {
-                    name: 'isSingle',
-                    type: 'boolean',
-                },
-                {
-                    name: 'gravadora',
-                    type: 'string',
-                },
-                {
-                    name: 'lancamento',
-                    type: 'date',
+                    name: 'path',
+                    type: 'varchar',
                 },
                 {
                     name: 'trackNumber',
                     type: 'integer',
                 },
                 {
-                    name: 'artist',
+                    name: 'albumId',
                     type: 'varchar',
                 },
+                
             ],
             foreignKeys: [
                 {
-                    name: 'artistId',
-                    columnNames: ['artist'],
-                    referencedTableName: 'artists',
+                    name: 'albumMusic',
+                    columnNames: ['albumId'],
+                    referencedTableName: 'albuns',
                     referencedColumnNames: ['id'],
                     onUpdate: 'CASCADE',
-                    onDelete: 'CASCADE'
+                    onDelete: 'CASCADE',
                 }
-            ]    
-        }))
+            ]
+        }));
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable('albuns');
+        await queryRunner.dropTable('musics');
     }
 
 }
