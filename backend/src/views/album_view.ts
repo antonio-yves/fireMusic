@@ -12,4 +12,7 @@ export default {
             albumTrackNumber: album.trackNumber,
         }
     },
+    renderMany(albuns: Album[]) {
+        return albuns.map(album => this.render(album));
+    }
 }

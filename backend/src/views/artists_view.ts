@@ -3,10 +3,10 @@ import Artist from '../models/Artist';
 export default {
     render(artist: Artist) {
         return {
-            id: artist.id,
-            name: artist.user.name,
-            country: artist.user.country,
-            generos: artist.generos
+            artistId: artist.id,
+            artistName: artist.user.userName,
+            artistCountry: artist.user.country,
+            artistGenres: artist.generos
         };
     },
     renderMany(artists: Artist[]) {

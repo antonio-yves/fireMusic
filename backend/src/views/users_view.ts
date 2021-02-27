@@ -3,11 +3,11 @@ import User from '../models/User';
 export default {
     render(user: User) {
         return {
-            id: user.id,
-            name: user.name,
-            email: user.email,
-            birthDate: user.birthDate,
-            country: user.country,
+            userId: user.id,
+            userOwnName: user.name,
+            userEmail: user.email,
+            userBirthDate: user.birthDate,
+            userCountry: user.country,
             userName: user.userName,
             isArtist: user.isArtist,
         };

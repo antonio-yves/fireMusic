@@ -29,5 +29,44 @@ export default {
         await artistRepository.save(artist).catch();
         
         return response.status(200).json(artistView.render(artist));
+    },
+    async index (request: Request, response: Response){
+        const artistRepository = getRepository(Artist);
+
+        const artists = await artistRepository.find();
+
+        return response.status(200).json(artistView.renderMany(artists));
+    },
+    async show (request: Request, response: Response){
+        const artistRepository = getRepository(Artist);
+
+        const { id } = request.params;
+
+        const artist = await artistRepository.findOne(id);
+
+        if (!artist){
+            return response.status(400).json({'error': 'Could not find any entity matching this ID'});
+        }
+
+        return response.status(200).json(artistView.render(artist));
+    },
+    async update (request: Request, response: Response){
+        const artistRepository = getRepository(Artist);
+
+        const { id } = request.params;
+        const { newGeneros } = request.body;
+
+        await artistRepository.save({
+            id,
+            generos: newGeneros
+        });
+
+        const artist = await artistRepository.findOne(id);
+
+        if (!artist){
+            return response.status(400).json({'error': 'Could not find any entity matching this ID'});
+        }
+
+        return response.status(200).json(artistView.render(artist));
     }
 }

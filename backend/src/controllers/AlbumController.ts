@@ -10,7 +10,6 @@ import albumView from '../views/album_view';
 import albumCoverView from '../views/albumCover_view';
 
 export default {
-
     async create(request: Request, response: Response) {
         const albumRepository = getRepository(Album);
         const albumCoverRepository = getRepository(AlbumCover);
@@ -81,14 +80,25 @@ export default {
 
         return response.status(200).json({"album": albumView.render(album), "cover": albumCoverView.render(cover)});
     },
+    async index (request: Request, response: Response){
+        const albumRepository = getRepository(Album);
+
+        const albuns = await albumRepository.find();
+
+        return response.status(200).json(albumView.renderMany(albuns));
+    },
     async show (request: Request, response: Response){
         const { id } = request.params;
 
         const albumRepository = getRepository(Album);
 
-        const album = await albumRepository.findOneOrFail(id, {
+        const album = await albumRepository.findOne(id, {
             relations: ['musics']
         });
+
+        if (!album){
+            return response.status(400).json({'error': 'Could not find any entity matching this ID'});
+        }
         
         return response.status(200).json(album);
     }
