@@ -101,6 +101,22 @@ export default {
         }
         
         return response.status(200).json(album);
+    },
+
+    async delete(request: Request, response: Response) {
+        const albumRepository = getRepository(Album);
+
+        const { id } = request.params;
+
+        await albumRepository.delete(id);
+
+        const album = await albumRepository.findOne(id);
+
+        if(album) {
+            return response.status(400).json({'error': 'Could not delete entity matching this ID'})
+        }
+
+        return response.status(410).json({'success': 'The entity was successfully deleted'});
     }
 
 }

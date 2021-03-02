@@ -1,4 +1,5 @@
 import Album from '../models/Album';
+import User from '../models/User';
 
 export default {
     render(album: Album) {

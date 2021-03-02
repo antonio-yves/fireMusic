@@ -15,6 +15,7 @@ import LoginController from './controllers/LoginController';
 import ArtistController from './controllers/ArtistController';
 import AlbumController from './controllers/AlbumController';
 import MusicController from './controllers/MusicController';
+import PlaylistController from './controllers/PlaylistController';
 
 const routes = Router();
 const profilePictureUpload = multer(profilePictureUploadConfig);
@@ -33,18 +34,25 @@ routes.post('/artist', loginMiddleware, ArtistController.create);
 routes.get('/artist/:id', loginMiddleware, ArtistController.show);
 routes.get('/artists', loginMiddleware, ArtistController.index);
 routes.put('/artist/:id', loginMiddleware, ArtistController.update);
+routes.delete('/artist/:id', loginMiddleware, ArtistController.delete);
 
 // Album
 routes.post('/album', loginMiddleware, albumCoverUpload.single('albumCover'), AlbumController.create);
 routes.get('/album/:id', loginMiddleware, AlbumController.show);
 routes.get('/albums', loginMiddleware, AlbumController.index);
+routes.delete('/album/:id', loginMiddleware, AlbumController.delete);
 
 // Music
 routes.post('/music', loginMiddleware, musicUpload.single('music'), MusicController.create);
 routes.get('/music/:id', loginMiddleware, MusicController.show);
 routes.get('/musics', loginMiddleware, MusicController.index);
+routes.delete('/music/:id', loginMiddleware, MusicController.delete);
 
-// Login
+// Playlist
+routes.post('/playlist', loginMiddleware, PlaylistController.create);
+routes.post('/playlist/add', loginMiddleware, PlaylistController.addMusic);
+
+// Login 
 routes.post('/login', LoginController.login);
 
 export default routes;

@@ -1,7 +1,9 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToOne, BeforeInsert, BeforeUpdate} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToOne, OneToMany, BeforeInsert, BeforeUpdate, JoinColumn} from 'typeorm';
 import Image from './Image';
 import bcrypt from 'bcryptjs';
 import Artist from './Artist';
+import Playlist from './Playlist';
+import Album from './Album';
 
 @Entity('users')
 export default class User {
@@ -41,4 +43,8 @@ export default class User {
 
     @OneToOne(type => Artist, artist => artist.user)
     artist: Artist;
+
+    @OneToMany(() => Playlist, playlist => playlist.user)
+    @JoinColumn({name: 'userId'})
+    playlist: Playlist[];
 }

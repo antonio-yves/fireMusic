@@ -50,7 +50,7 @@ export default {
         const music = musicRepository.create(musicData);
         await musicRepository.save(music);
 
-        return response.status(200).json(musicView.render(music));
+        return response.status(200).json(music);
     },
     async index (request: Request, response: Response){
         const musicRepository = getRepository(Music);
@@ -71,5 +71,20 @@ export default {
         }
 
         return response.status(200).json(musicView.render(music));
+    },
+    async delete(request: Request, response: Response) {
+        const musicRepository = getRepository(Music);
+
+        const { id } = request.params;
+
+        await musicRepository.delete(id);
+
+        const music = await musicRepository.findOne(id);
+
+        if(music) {
+            return response.status(400).json({'error': 'Could not delete entity matching this ID'})
+        }
+
+        return response.status(410).json({'success': 'The entity was successfully deleted'});
     }
 }

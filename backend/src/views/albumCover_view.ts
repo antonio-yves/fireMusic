@@ -6,7 +6,6 @@ export default {
             albumCoverId: albumCover.id,
             albumCoverPath: albumCover.path,
             album: albumCover.album.nome,
-            albumArtist: albumCover.album.artist.user.name,
         };
     },
     renderMany(albumCovers: AlbumCover[]) {

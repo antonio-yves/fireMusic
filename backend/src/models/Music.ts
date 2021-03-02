@@ -1,5 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn, OneToMany} from 'typeorm';
 import Album from './Album';
+import MusicsPlaylist from './MusicsPlaylist';
+import Playlist from './Playlist';
 
 @Entity('musics')
 export default class Music {
@@ -25,6 +27,12 @@ export default class Music {
     @ManyToOne(() => Album, album => album.musics)
     @JoinColumn({name: 'albumId'})
     album: Album;
+
+    @OneToMany(() => MusicsPlaylist, musicsPlaylist => musicsPlaylist.music, {
+        cascade: ['insert', 'update']
+    })
+    @JoinColumn({name: 'musicId'})
+    musicsPlaylist: MusicsPlaylist[];
 }
 
 

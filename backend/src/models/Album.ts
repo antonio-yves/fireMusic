@@ -36,9 +36,9 @@ export default class Album {
     @OneToOne(type => AlbumCover, cover => cover.album)
     cover: AlbumCover;
 
-    @OneToOne(type => Artist, artist => artist.user)
+    @OneToOne(type => Artist, artist => artist.album)
     @JoinColumn({name: 'artist'})
-    artist: Artist;
+    artist: Artist; 
 
     @OneToMany(() => Music, music => music.album, {
         cascade: ['insert', 'update']

@@ -52,6 +52,7 @@ export default {
     },
     async update (request: Request, response: Response){
         const artistRepository = getRepository(Artist);
+        const userRepository = getRepository(User);
 
         const { id } = request.params;
         const { newGeneros } = request.body;
@@ -68,5 +69,20 @@ export default {
         }
 
         return response.status(200).json(artistView.render(artist));
+    },
+    async delete (request: Request, response: Response){
+        const artistRepository = getRepository(Artist);
+
+        const { id } = request.params;
+
+        await artistRepository.delete(id);
+
+        const artist = await artistRepository.findOne(id);
+
+        if (artist){
+            return response.status(400).json({'error': 'Could not delete entity matching this ID'});
+        }
+
+        return response.status(410).json({'success': 'The entity was successfully deleted'});
     }
 }

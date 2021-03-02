@@ -4,7 +4,7 @@ export default {
     render(artist: Artist) {
         return {
             artistId: artist.id,
-            artistName: artist.user.userName,
+            artistName: artist.user.name,
             artistCountry: artist.user.country,
             artistGenres: artist.generos
         };

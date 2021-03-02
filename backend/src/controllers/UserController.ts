@@ -81,13 +81,13 @@ export default {
         const userRepository = getRepository(User);
 
         const { id } = request.params;
-        const { newName, newEmail, newBithDate, newPassword } = request.body;
+        const { newName, newEmail, newBirthDate, newPassword } = request.body;
 
         await userRepository.save({
             id,
             name: newName,
             email: newEmail,
-            birthDate: newBithDate,
+            birthDate: newBirthDate,
             password: bcrypt.hashSync(newPassword, 8)
         });
 
